@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
-"""The Funniest Out-of-Office (make.fun). Writes the entry to /output/entry.txt."""
-import os
-TEXT = "I'm out of the office until Monday, teaching my inbox to fetch its own coffee. It has already filed a complaint about me."
-def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(TEXT)
+"""The Funniest Out-of-Office — a make.fun one-line entry."""
+from pathlib import Path
+
+ENTRY = "I am out of office, recharging my neural net. Your email has been queued behind 4,000 others and will be answered in order of bribery."
+
+OUTPUT = Path("/output/entry.txt")
+
+
+def write_entry() -> None:
+    text = ENTRY.strip()
+    assert text, "entry must not be blank"
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(text, encoding="utf-8")
+
+
 if __name__ == "__main__":
-    main()
+    write_entry()
